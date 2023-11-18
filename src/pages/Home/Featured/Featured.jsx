@@ -10,7 +10,7 @@ const Featured = () => {
         subHeading="Check it Out"
         heading="Featured Item"></SectionTitle>
 
-      <div className="md:flex justify-center items-center gap-10 px-36 py-32">
+      <div className="md:flex justify-center items-center gap-10 px-36 py-32 bg-black bg-opacity-40">
         <div>
           <img className="rounded-lg" src={featuredImg} alt="" />
         </div>
@@ -22,6 +22,9 @@ const Featured = () => {
             repellat quia nisi, neque unde doloribus maiores laborum! Mollitia,
             similique ab!
           </p>
+          <button className="btn btn-outline border-0 border-b-4 text-white mt-4">
+            Order Now
+          </button>
         </div>
       </div>
     </div>
