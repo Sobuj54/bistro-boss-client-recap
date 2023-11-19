@@ -1,5 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import Cover from "../../shared/Cover/Cover";
+import menuImg from "../../../assets/menu/banner3.jpg";
+import PopularMenu from "../../Home/PopularMenu/PopularMenu";
 
 const Menu = () => {
   return (
@@ -7,7 +10,15 @@ const Menu = () => {
       <Helmet>
         <title>Bistro | Our Menu</title>
       </Helmet>
-      Menu page
+      <Cover img={menuImg} title="Our menu"></Cover>
+
+      <PopularMenu></PopularMenu>
+      <Cover img={menuImg} title="Our menu"></Cover>
+
+      <PopularMenu></PopularMenu>
+      <Cover img={menuImg} title="Our menu"></Cover>
+
+      <PopularMenu></PopularMenu>
     </div>
   );
 };
