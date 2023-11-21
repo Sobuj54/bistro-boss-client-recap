@@ -5,7 +5,8 @@ import NavBar from "../pages/shared/NavBar/NavBar";
 const Main = () => {
   // will not show any header or footer for login page
   const location = useLocation();
-  const noHeaderFooter = location.pathname.includes("login");
+  const noHeaderFooter =
+    location.pathname.includes("login") || location.pathname.includes("signup");
 
   return (
     <>
