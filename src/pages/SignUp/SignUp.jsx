@@ -1,8 +1,13 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const handleSignUp = (e) => {};
+  const { handleSubmit, register } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <div className="hero min-h-screen bg-base-200">
@@ -17,7 +22,21 @@ const SignUp = () => {
         </div>
         <div className="card w-full md:w-1/2 shadow-2xl bg-base-100">
           {/* form */}
-          <form onSubmit={handleSignUp} className="card-body">
+          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+            {/* name */}
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                {...register("name")}
+                placeholder="Name"
+                className="input input-bordered"
+                required
+              />
+            </div>
             {/* email */}
             <div className="form-control">
               <label className="label">
@@ -26,6 +45,7 @@ const SignUp = () => {
               <input
                 type="email"
                 name="email"
+                {...register("email")}
                 placeholder="email"
                 className="input input-bordered"
                 required
@@ -39,6 +59,7 @@ const SignUp = () => {
               <input
                 type="password"
                 name="password"
+                {...register("password")}
                 placeholder="password"
                 className="input input-bordered"
                 required
