@@ -1,23 +1,25 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthProvider } from "../../Context/AuthContext";
 import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
   const { handleSubmit, register, reset } = useForm();
   const { createUser, updateUserProfile } = useContext(AuthProvider);
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    const { name, email, password } = data;
+    const { name, photo, email, password } = data;
     createUser(email, password)
       .then((result) => {
         const loggedUser = result.user;
 
-        updateUserProfile(name)
+        updateUserProfile(name, photo)
           .then(() => {
             // console.log("profile updated");
             reset();
+            navigate("/");
           })
           .catch((error) => console.log(error));
 
@@ -54,6 +56,19 @@ const SignUp = () => {
                   name="name"
                   {...register("name")}
                   placeholder="Name"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              {/* photo */}
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Photo URL</span>
+                </label>
+                <input
+                  type="url"
+                  {...register("photo")}
+                  placeholder="Photo URL"
                   className="input input-bordered"
                   required
                 />

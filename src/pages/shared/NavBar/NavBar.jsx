@@ -41,9 +41,20 @@ const NavBar = () => {
       </li>
 
       {user ? (
-        <li>
-          <button onClick={handleLogout}>Logout</button>
-        </li>
+        <>
+          <li>
+            <button onClick={handleLogout}>Logout</button>
+          </li>
+          <li>
+            <div>
+              <img
+                src={user?.photoURL}
+                alt=""
+                className="w-7 h-7 rounded-full object-cover"
+              />
+            </div>
+          </li>
+        </>
       ) : (
         <li>
           <Link to="/login">Login</Link>

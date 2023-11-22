@@ -22,9 +22,10 @@ const AuthContext = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const updateUserProfile = (name) => {
+  const updateUserProfile = (name, photo) => {
     return updateProfile(auth.currentUser, {
       displayName: name,
+      photoURL: photo,
     });
   };
 
