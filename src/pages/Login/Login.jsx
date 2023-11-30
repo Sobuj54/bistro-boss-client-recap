@@ -15,19 +15,17 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location?.state?.from?.pathName || "/";
+  const from = location?.state?.from?.pathname || "/";
 
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
 
     signIn(email, password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
         form.reset();
         Swal.fire({
           position: "center",
