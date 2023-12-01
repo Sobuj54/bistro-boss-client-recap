@@ -5,7 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 const useCart = () => {
   const { user } = useContext(AuthProvider);
 
-  const { data: cart = [], refetch } = useQuery({
+  const {
+    data: cart = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["cart", user?.email],
     queryFn: async () => {
       const res = await fetch(
@@ -15,7 +19,7 @@ const useCart = () => {
     },
   });
 
-  return [cart, refetch];
+  return [cart, refetch, isLoading];
 };
 
 export default useCart;
