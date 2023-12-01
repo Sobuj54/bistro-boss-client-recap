@@ -2,26 +2,56 @@ import React from "react";
 import useCart from "../../../hooks/useCart";
 import { Helmet } from "react-helmet-async";
 import { FaTrashAlt } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const MyCart = () => {
-  const [cart, , isLoading] = useCart();
+  const [cart, refetch, isLoading] = useCart();
   const total = cart.reduce((sum, item) => item.price + sum, 0);
+
+  const handleDeleteItem = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/carts/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Item has been deleted.",
+                icon: "success",
+              });
+              refetch();
+            }
+          });
+      }
+    });
+  };
 
   if (isLoading) {
     return "Loading...";
   }
 
   return (
-    <div>
+    <div className="w-10/12 mx-auto">
       <Helmet>
         <title>bistro | My Cart</title>
       </Helmet>
-      <div className="uppercase flex items-center justify-between text-lg font-semibold mb-5">
+      <div className="uppercase flex items-center justify-evenly text-lg font-semibold mb-5">
         <h3>Total Items : {cart.length}</h3>
         <h3>Total Price : ${total}</h3>
         <button className="btn btn-sm btn-warning">PAY</button>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto w-full">
         <table className="table">
           {/* head */}
           <thead>
@@ -49,7 +79,9 @@ const MyCart = () => {
                 <td>{item.name}</td>
                 <td className="text-end">${item.price}</td>
                 <th>
-                  <button className="btn btn-ghost btn-md bg-red-500 text-white">
+                  <button
+                    onClick={() => handleDeleteItem(item._id)}
+                    className="btn btn-ghost btn-md bg-red-500 text-white">
                     <FaTrashAlt></FaTrashAlt>
                   </button>
                 </th>
