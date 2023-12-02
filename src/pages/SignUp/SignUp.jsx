@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthProvider } from "../../Context/AuthContext";
 import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const { handleSubmit, register, reset } = useForm();
@@ -18,8 +19,28 @@ const SignUp = () => {
         updateUserProfile(name, photo)
           .then(() => {
             // console.log("profile updated");
-            reset();
-            navigate("/");
+            const userInfo = { name: name, email: email };
+            fetch("http://localhost:5000/users", {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(userInfo),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.insertedId) {
+                  reset();
+                  navigate("/");
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Sign up Successful",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                }
+              });
           })
           .catch((error) => console.log(error));
 
@@ -49,7 +70,7 @@ const SignUp = () => {
               {/* name */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Email</span>
+                  <span className="label-text">Name</span>
                 </label>
                 <input
                   type="text"

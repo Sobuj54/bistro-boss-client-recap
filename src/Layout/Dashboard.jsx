@@ -7,8 +7,10 @@ import {
   FaWallet,
 } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
+import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
+  const [cart] = useCart();
   return (
     <>
       <div className="drawer lg:drawer-open">
@@ -47,6 +49,9 @@ const Dashboard = () => {
             <li>
               <NavLink to="/dashboard/myCart">
                 <FaShoppingCart></FaShoppingCart> My Cart
+                <span className="badge badge-secondary">
+                  +{cart?.length || 0}
+                </span>
               </NavLink>
             </li>
 
