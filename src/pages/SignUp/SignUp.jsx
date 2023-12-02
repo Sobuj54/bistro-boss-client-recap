@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthProvider } from "../../Context/AuthContext";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const { handleSubmit, register, reset } = useForm();
@@ -142,6 +143,7 @@ const SignUp = () => {
                 </Link>
               </p>
             </form>
+            <SocialLogin text="Sign Up"></SocialLogin>
           </div>
         </div>
       </div>
