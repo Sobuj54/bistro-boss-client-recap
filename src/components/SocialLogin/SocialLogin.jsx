@@ -24,17 +24,8 @@ const SocialLogin = ({ text }) => {
           body: JSON.stringify(userInfo),
         })
           .then((res) => res.json())
-          .then((data) => {
-            if (data.insertedId) {
-              navigate(from, { replace: true });
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Sign up Successful",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-            }
+          .then(() => {
+            navigate(from, { replace: true });
           });
       })
       .catch((error) => {
