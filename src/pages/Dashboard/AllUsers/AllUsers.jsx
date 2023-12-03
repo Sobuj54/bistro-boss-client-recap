@@ -3,6 +3,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { FaTrashAlt, FaUserShield } from "react-icons/fa";
 import Swal from "sweetalert2";
+import Spinner from "../../../components/Spinner/Spinner";
 
 const AllUsers = () => {
   const {
@@ -39,7 +40,7 @@ const AllUsers = () => {
   };
 
   if (isLoading) {
-    return "Loading...";
+    return <Spinner></Spinner>;
   }
 
   return (
