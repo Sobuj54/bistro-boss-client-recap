@@ -20,9 +20,11 @@ const AuthContext = ({ children }) => {
   const provider = new GoogleAuthProvider();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userLoading, setUserLoading] = useState(true);
 
   const createUser = (email, password) => {
     setLoading(true);
+    setUserLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
@@ -35,12 +37,14 @@ const AuthContext = ({ children }) => {
 
   const signIn = (email, password) => {
     setLoading(true);
+    setUserLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   // google login
   const googleLogin = () => {
     setLoading(true);
+    setUserLoading(true);
     return signInWithPopup(auth, provider);
   };
 
@@ -56,6 +60,7 @@ const AuthContext = ({ children }) => {
           .then((data) => {
             // console.log(data.data);
             localStorage.setItem("token", data.data.token);
+            setUserLoading(false);
           });
       } else {
         localStorage.removeItem("token");
@@ -70,12 +75,14 @@ const AuthContext = ({ children }) => {
 
   const logOut = () => {
     setLoading(true);
+    setUserLoading(true);
     return signOut(auth);
   };
 
   const authInfo = {
     user,
     loading,
+    userLoading,
     createUser,
     updateUserProfile,
     signIn,

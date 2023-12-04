@@ -16,14 +16,12 @@ const useAxiosSecure = () => {
     axiosSecure.interceptors.request.use((config) => {
       const token = localStorage.getItem("token");
       if (token) {
-        config.headers.authorization = `bearer ${token}`;
+        config.headers.authorization = `Bearer ${token}`;
       }
       return config;
     });
 
-    axiosSecure.interceptors.response.use((response) => {
-      return response;
-    }),
+    axiosSecure.interceptors.response.use((response) => response),
       async (error) => {
         if (
           error.response &&
@@ -34,9 +32,9 @@ const useAxiosSecure = () => {
         }
         return Promise.reject(error);
       };
-  }, [logOut, navigate, axiosSecure]);
+  }, []);
 
-  return axiosSecure;
+  return [axiosSecure];
 };
 
 export default useAxiosSecure;
