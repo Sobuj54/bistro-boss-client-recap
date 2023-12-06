@@ -2,9 +2,12 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AddItem = () => {
-  const { register, handleSubmit } = useForm();
+  const [axiosSecure] = useAxiosSecure();
+  const { register, handleSubmit, reset } = useForm();
 
   const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
     import.meta.env.VITE_image_upload
@@ -24,7 +27,27 @@ const AddItem = () => {
       .then((imageResponse) => {
         if (imageResponse.success) {
           const imgUrl = imageResponse.data.display_url;
-          const newItem = { name, recipe, price, category, image: imgUrl };
+          const newItem = {
+            name,
+            recipe,
+            price: parseFloat(price),
+            category,
+            image: imgUrl,
+          };
+
+          // posting new item to database
+          axiosSecure.post("/menu", newItem).then((data) => {
+            if (data.data.insertedId) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Item added successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              reset();
+            }
+          });
         }
       });
   };
@@ -64,11 +87,11 @@ const AddItem = () => {
               defaultValue="select one"
               className="select select-bordered">
               <option disabled>select one</option>
-              <option>Pizza</option>
-              <option>Soup</option>
-              <option>Salad</option>
-              <option>Drinks</option>
-              <option>Dessert</option>
+              <option>pizza</option>
+              <option>soup</option>
+              <option>salad</option>
+              <option>drinks</option>
+              <option>dessert</option>
             </select>
           </label>
           {/* price */}
