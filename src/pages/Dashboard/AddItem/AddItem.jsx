@@ -5,8 +5,28 @@ import { useForm } from "react-hook-form";
 
 const AddItem = () => {
   const { register, handleSubmit } = useForm();
+
+  const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${
+    import.meta.env.VITE_image_upload
+  }`;
+
   const onSubmit = (data) => {
-    console.log(data);
+    const { name, recipe, price, category } = data;
+    // uploading image to imgbb
+    const formData = new FormData();
+    formData.append("image", data.image[0]);
+
+    fetch(imageHostingUrl, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imageResponse) => {
+        if (imageResponse.success) {
+          const imgUrl = imageResponse.data.display_url;
+          const newItem = { name, recipe, price, category, image: imgUrl };
+        }
+      });
   };
 
   return (
@@ -29,20 +49,21 @@ const AddItem = () => {
             placeholder="Recipe Name"
             {...register("name")}
             required
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full"
           />
         </label>
         <div className="flex gap-2">
           {/* category */}
-          <label className="form-control w-full max-w-xs">
+          <label className="form-control w-full ">
             <div className="label">
               <span className="label-text">Category*</span>
             </div>
             <select
               {...register("category")}
               required
+              defaultValue="select one"
               className="select select-bordered">
-              <option>select one</option>
+              <option disabled>select one</option>
               <option>Pizza</option>
               <option>Soup</option>
               <option>Salad</option>
@@ -51,7 +72,7 @@ const AddItem = () => {
             </select>
           </label>
           {/* price */}
-          <label className="form-control w-full max-w-xs">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">Price*</span>
             </div>
@@ -70,7 +91,7 @@ const AddItem = () => {
             <span className="label-text">Recipe details*</span>
           </div>
           <textarea
-            {...register("details")}
+            {...register("recipe")}
             required
             className="textarea textarea-bordered h-24"
             placeholder="Bio"></textarea>
@@ -82,6 +103,8 @@ const AddItem = () => {
           </div>
           <input
             type="file"
+            {...register("image")}
+            required
             className="file-input file-input-bordered w-full max-w-xs"
           />
         </label>
