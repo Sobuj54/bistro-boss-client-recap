@@ -2,13 +2,16 @@ import React from "react";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { Helmet } from "react-helmet-async";
 import useMenu from "../../../hooks/useMenu";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaCropAlt, FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useState } from "react";
+import UpdateItem from "../../../components/UpdateItem/UpdateItem";
 
 const ManageItems = () => {
   const [menu, refetch] = useMenu();
   const [axiosSecure] = useAxiosSecure();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDeleteItem = (id) => {
     Swal.fire({
@@ -36,11 +39,27 @@ const ManageItems = () => {
     });
   };
 
+  const handleUpdateItem = (id) => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="w-full">
       <Helmet>
         <title>Admin | Manage Items</title>
       </Helmet>
+
+      {/* update an item */}
+      {isModalOpen && (
+        <div className="fixed bg-white z-10 top-0 right-0 left-[370px] bottom-0">
+          <UpdateItem></UpdateItem>
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="bg-red-500 p-2 rounded-full text-white absolute top-5 right-5">
+            <FaCropAlt></FaCropAlt>
+          </button>
+        </div>
+      )}
 
       <SectionTitle
         heading="Manage All Items"
@@ -73,7 +92,11 @@ const ManageItems = () => {
                 <td>{item?.name}</td>
                 <td>{item?.price}</td>
                 <th>
-                  <button className="btn btn-ghost btn-xs">details</button>
+                  <button
+                    onClick={() => handleUpdateItem(item._id)}
+                    className="btn btn-ghost btn-md bg-green-500 text-white">
+                    <FaPencilAlt></FaPencilAlt>
+                  </button>
                 </th>
                 <th>
                   <button
