@@ -3,6 +3,7 @@ import useCart from "../../../hooks/useCart";
 import { Helmet } from "react-helmet-async";
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
+import Spinner from "../../../components/Spinner/Spinner";
 
 const MyCart = () => {
   const [cart, refetch, isLoading] = useCart();
@@ -38,7 +39,7 @@ const MyCart = () => {
   };
 
   if (isLoading) {
-    return "Loading...";
+    return <Spinner></Spinner>;
   }
 
   return (

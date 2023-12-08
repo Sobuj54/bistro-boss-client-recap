@@ -13,7 +13,7 @@ const useMenu = () => {
   // }, []);
   // doing the same thing using tanstack query
 
-  const { data: menu = [] } = useQuery({
+  const { data: menu = [], refetch } = useQuery({
     queryKey: ["menu"],
     queryFn: async () => {
       const res = await fetch("http://localhost:5000/menu");
@@ -21,7 +21,7 @@ const useMenu = () => {
     },
   });
 
-  return [menu];
+  return [menu, refetch];
 };
 
 export default useMenu;
