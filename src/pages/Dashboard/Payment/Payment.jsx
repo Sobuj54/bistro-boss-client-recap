@@ -1,6 +1,11 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "./CheckoutForm";
+
+const stripePromise = loadStripe(import.meta.env.VITE_payment_pk);
 
 const Payment = () => {
   return (
@@ -11,7 +16,10 @@ const Payment = () => {
       <SectionTitle
         subHeading="Please process"
         heading="Payment"></SectionTitle>
-      Payment
+
+      <Elements stripe={stripePromise}>
+        <CheckoutForm></CheckoutForm>
+      </Elements>
     </div>
   );
 };
