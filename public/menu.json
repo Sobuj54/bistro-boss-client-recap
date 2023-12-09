@@ -454,5 +454,13 @@
         "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-2-370x247.jpg",
         "category": "soup",
         "price": 10.5
+    },
+    {  
+        "_id":"6570a7c40a931aa71c3d32f1",
+        "name":"bangla kabar",
+        "recipe":"Very tasty bangla food.",
+        "image":"https://i.ibb.co/ThTkJpy/suzy-1.png",
+        "category": "dessert",
+        "price":300
     }
 ]

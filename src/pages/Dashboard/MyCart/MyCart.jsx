@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import Spinner from "../../../components/Spinner/Spinner";
+import { Link } from "react-router-dom";
 
 const MyCart = () => {
   const [cart, refetch, isLoading] = useCart();
@@ -50,7 +51,9 @@ const MyCart = () => {
       <div className="uppercase flex items-center justify-evenly text-lg font-semibold mb-5">
         <h3>Total Items : {cart.length}</h3>
         <h3>Total Price : ${total}</h3>
-        <button className="btn btn-sm btn-warning">PAY</button>
+        <Link to="/dashboard/payment">
+          <button className="btn btn-sm btn-warning">PAY</button>
+        </Link>
       </div>
       <div className="overflow-x-auto w-full">
         <table className="table">
