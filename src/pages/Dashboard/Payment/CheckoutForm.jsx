@@ -16,10 +16,22 @@ const CheckoutForm = () => {
     if (card == null) {
       return;
     }
+    console.log(card);
+    // Use your card Element with other Stripe.js APIs
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card,
+    });
+
+    if (error) {
+      console.log("error:", error);
+    } else {
+      console.log("paymentMethod:", paymentMethod);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="w-2/4 mx-auto" onSubmit={handleSubmit}>
       <CardElement
         options={{
           style: {
@@ -36,7 +48,10 @@ const CheckoutForm = () => {
           },
         }}
       />
-      <button type="submit" disabled={!stripe}>
+      <button
+        className="btn btn-primary btn-sm mt-4"
+        type="submit"
+        disabled={!stripe}>
         Pay
       </button>
     </form>
