@@ -2,8 +2,9 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { AuthProvider } from "../../../Context/AuthContext";
+import "./checkoutForm.css";
 
-const CheckoutForm = ({ price }) => {
+const CheckoutForm = ({ cart, price }) => {
   const { user } = useContext(AuthProvider);
   const stripe = useStripe();
   const elements = useElements();
@@ -15,7 +16,6 @@ const CheckoutForm = ({ price }) => {
   // creating a payment intent
   useEffect(() => {
     axiosSecure.post("/create-payment-intent", { price }).then((res) => {
-      console.log(res.data.clientSecret);
       setClientSecret(res.data.clientSecret);
     });
   }, []);
@@ -31,17 +31,15 @@ const CheckoutForm = ({ price }) => {
     if (card == null) {
       return;
     }
-    console.log(card);
+
     // Use your card Element with other Stripe.js APIs
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
 
     if (error) {
       console.log("error:", error);
-    } else {
-      console.log("paymentMethod:", paymentMethod);
     }
 
     setProcessing(true);
@@ -60,10 +58,27 @@ const CheckoutForm = ({ price }) => {
     if (confirmationError) {
       console.log(confirmationError);
     }
+
     console.log("paymentIntent:", paymentIntent);
     setProcessing(false);
+
     if (paymentIntent.status === "succeeded") {
       setTransactionId(paymentIntent.id);
+
+      const paymentDetails = {
+        email: user.email,
+        transactionId,
+        price,
+        quantity: cart.length,
+        itemId: cart.map((item) => item._id),
+        itemNames: cart.map((item) => item.name),
+      };
+
+      axiosSecure.post("/payments", paymentDetails).then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+        }
+      });
     }
   };
 
@@ -93,7 +108,11 @@ const CheckoutForm = ({ price }) => {
           Pay
         </button>
       </form>
-      {transactionId && <div>Successful transactionId:{transactionId} </div>}
+      {transactionId && (
+        <div className="text-center text-green-500 mt-3">
+          Successful transactionId : {transactionId}
+        </div>
+      )}
     </>
   );
 };
