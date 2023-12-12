@@ -16,8 +16,6 @@ import useAdmin from "../hooks/useAdmin";
 const Dashboard = () => {
   const [cart] = useCart();
   const [isAdmin] = useAdmin();
-  console.log("isAdmin", isAdmin);
-  // const isAdmin = true;
 
   return (
     <>
@@ -75,13 +73,13 @@ const Dashboard = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dashboard/reservation">
-                    <FaCalendar></FaCalendar> Reservations
+                  <NavLink to="/dashboard/paymentHistory">
+                    <FaCalendar></FaCalendar> Payment History
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/dashboard/payment">
-                    <FaWallet></FaWallet> Payment History
+                    <FaWallet></FaWallet> Payment
                   </NavLink>
                 </li>
                 <li>
