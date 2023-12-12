@@ -5,6 +5,7 @@ import { FaTrashAlt, FaUserShield } from "react-icons/fa";
 import Swal from "sweetalert2";
 import Spinner from "../../../components/Spinner/Spinner";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 
 const AllUsers = () => {
   const [axiosSecure] = useAxiosSecure();
@@ -50,6 +51,9 @@ const AllUsers = () => {
       <Helmet>
         <title>Admin | All Users</title>
       </Helmet>
+
+      <SectionTitle heading="All Users" subHeading="Available"></SectionTitle>
+
       <h3 className="text-xl mb-4 font-semibold text-center">
         Total User : {users.length}
       </h3>

@@ -4,10 +4,12 @@ import { AuthProvider } from "../../../Context/AuthContext";
 import Swal from "sweetalert2";
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../../../hooks/useCart";
+import useAdmin from "../../../hooks/useAdmin";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthProvider);
   const [cart] = useCart();
+  const [isAdmin] = useAdmin();
 
   const handleLogout = () => {
     logOut()
@@ -42,6 +44,13 @@ const NavBar = () => {
       <li>
         <Link to="/order/Salad">Order Food</Link>
       </li>
+      <li>
+        {isAdmin ? (
+          <Link to="/dashboard/adminHome">Dashboard</Link>
+        ) : (
+          <Link to="/dashboard/userHome">Dashboard</Link>
+        )}
+      </li>
 
       {user ? (
         <>
@@ -52,7 +61,7 @@ const NavBar = () => {
             <div>
               <img
                 src={user?.photoURL}
-                alt=""
+                alt={user?.displayName}
                 className="w-7 h-7 rounded-full object-cover"
               />
             </div>
