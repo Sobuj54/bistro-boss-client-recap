@@ -3,6 +3,7 @@ import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { useQuery } from "@tanstack/react-query";
 import { AuthProvider } from "../../../Context/AuthContext";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const PaymentHistory = () => {
   const { user } = useContext(AuthProvider);
@@ -20,6 +21,9 @@ const PaymentHistory = () => {
 
   return (
     <div className="w-full">
+      <Helmet>
+        <title>Bistro | Payment History</title>
+      </Helmet>
       <SectionTitle
         heading="Payment History"
         subHeading="All of Your"></SectionTitle>
