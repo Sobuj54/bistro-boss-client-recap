@@ -4,6 +4,7 @@ import { AuthProvider } from "../../../Context/AuthContext";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { FaCalendarAlt, FaMoneyBill, FaUsers } from "react-icons/fa";
+import Chart from "../../../components/BarChart/Chart";
 
 const AdminHome = () => {
   const { user } = useContext(AuthProvider);
@@ -71,6 +72,8 @@ const AdminHome = () => {
           <div className="stat-desc">↘︎ 90 (14%)</div>
         </div>
       </div>
+
+      <Chart></Chart>
     </div>
   );
 };
